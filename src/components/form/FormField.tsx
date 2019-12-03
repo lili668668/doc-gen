@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react'
-import { FormState } from '../../../utils/default/FormHook'
+import { FormState } from './FormHook'
 
 interface PropTypes<FormType> {
   component: React.ElementType
