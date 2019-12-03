@@ -1,5 +1,5 @@
 import React, { createContext } from 'react'
-import { ThemeProvider, createMuiTheme } from '@material-ui/core'
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core'
 import yellow from '@material-ui/core/colors/yellow'
 import orange from '@material-ui/core/colors/orange'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -13,6 +13,19 @@ import FormStateProvider from './components/form/FormStateProvider'
 import { getValueFromChangeEvent, getValueFromValue } from './components/form/FormHelper'
 import FormField from './components/form/FormField'
 import Presentation, { PresentationProps } from './components/Presentation'
+import ExampleButton from './components/form/ExampleButton'
+import paginationReq from './examples/paginationReq'
+import paginationRes from './examples/paginationRes'
+
+const useStyles = makeStyles((theme) => ({
+  presetation: {
+    hight: '100%',
+    width: '100%',
+    position: 'fixed',
+    top: 0,
+    right: 0
+  }
+}))
 
 const initialForm = (defaultFrom?: PresentationProps): PresentationProps => ({
   platform: 'COMMON',
@@ -23,6 +36,7 @@ const initialForm = (defaultFrom?: PresentationProps): PresentationProps => ({
   tag: '',
   query: '',
   request: '',
+  responseCode: "200",
   response: '',
   ...defaultFrom
 })
@@ -45,6 +59,7 @@ const platformOptions = [
 const TextField = React.memo(MuiTextField)
 
 const App: React.FC = () => {
+  const classes = useStyles()
   const theme = createMuiTheme({
     palette: {
       type: 'dark',
@@ -67,6 +82,7 @@ const App: React.FC = () => {
           tag: getValueFromChangeEvent,
           query: getValueFromValue,
           request: getValueFromValue,
+          responseCode: getValueFromChangeEvent,
           response: getValueFromValue
         }}
         validation={{
@@ -78,6 +94,7 @@ const App: React.FC = () => {
           tag: [],
           query: [],
           request: [],
+          responseCode: [],
           response: []
         }}
         onSubmit={(form) => form}
@@ -151,10 +168,58 @@ const App: React.FC = () => {
                     name="query"
                     label="Query Parameter Example"
                   />
+                  <ExampleButton
+                    context={FormContext}
+                    field="query"
+                    example={paginationReq}
+                  >
+                    建立分頁請求資料範本
+                  </ExampleButton>
+                </Grid>
+                <Grid item>
+                  <FormField<PresentationProps, EditorProps>
+                    context={FormContext}
+                    component={Editor}
+                    name="request"
+                    label="Request Body Example"
+                  />
+                </Grid>
+                <Grid item>
+                  <FormField<PresentationProps, TextFieldProps>
+                    fullWidth
+                    context={FormContext}
+                    component={TextField}
+                    label="Response Code"
+                    name="responseCode"
+                  />
+                </Grid>
+                <Grid item>
+                  <FormField<PresentationProps, EditorProps>
+                    context={FormContext}
+                    component={Editor}
+                    name="response"
+                    label="Response Body Example"
+                  />
+                  <ExampleButton
+                    context={FormContext}
+                    field="response"
+                    responseCode="204"
+                    example=""
+                  >
+                    建立無資料回應範本
+                  </ExampleButton>
+                  <ExampleButton
+                    context={FormContext}
+                    field="response"
+                    responseCode="200"
+                    example={paginationRes}
+                  >
+                    建立分頁回應範本
+                  </ExampleButton>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} className={classes.presetation}>
               <FormContext.Consumer>
                 {(formState) => {
                   const { value } = formState

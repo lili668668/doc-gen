@@ -24,7 +24,7 @@ const Editor: React.FC<EditorProps> = (props) => {
       <Grid item>
         <MonacoEditor
           width="100%"
-          height="200"
+          height="400"
           language="json"
           theme="vs-dark"
           value={code}
