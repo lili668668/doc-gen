@@ -2,7 +2,7 @@
   "name": "doc-gen",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://lili668668.github.io/doc-gen",
+  "homepage": "https://lili668668.github.io/doc-gen",
   "dependencies": {
     "@babel/core": "7.6.0",
     "@material-ui/core": "^4.7.1",
