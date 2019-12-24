@@ -187,10 +187,7 @@ export const useForm = <FormType>(options: {
               return false
             })
         })
-      if (pass) {
-        setLastSubmitForm(state)
-        return onSubmit(state)
-      }
+      if (pass) return onSubmit(state)
       return state
     }
     return state
@@ -228,7 +225,10 @@ export const useForm = <FormType>(options: {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, formValidation])
 
-  const [handleDebouncedSubmit] = useDebouncedCallback(() => dispatch({ type: 'submit' }), 200)
+  const [handleDebouncedSubmit] = useDebouncedCallback(() => {
+    setLastSubmitForm(value)
+    dispatch({ type: 'submit' })
+  }, 200)
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     handleDebouncedSubmit()
