@@ -207,13 +207,14 @@ export const getResponseBody = (response: string, code: string) => {
 
 export const toYaml = (value: PresentationProps): string => {
   const url = getUrl(value.platform, value.path)
+  const parameters = getPathParameters(url).concat(getQueryParameters(value.query) as any)
   const data = {
     summary: url,
     description: `Assignee: ${value.assignee}\n${value.description}`,
     tags: [value.tag],
     security: [{ JWT: [] }],
     operationId: url.replace(/\//gi, '.').slice(1),
-    parameters: getPathParameters(url).concat(getQueryParameters(value.query) as any),
+    parameters: parameters.length === 0 ? undefined : parameters,
     requestBody: value.request === '' ? undefined : getRequestBody(value.request),
     responses: getResponseBody(value.response, value.responseCode)
   }

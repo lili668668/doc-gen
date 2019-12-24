@@ -19,11 +19,12 @@ import paginationRes from './examples/paginationRes'
 
 const useStyles = makeStyles((theme) => ({
   presetation: {
-    hight: '100%',
+    maxHeight: '100%',
     width: '100%',
     position: 'fixed',
     top: 0,
-    right: 0
+    right: 0,
+    overflowY: 'scroll'
   }
 }))
 
