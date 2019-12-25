@@ -102,7 +102,7 @@ export const getQueryParameters = (query: string): Array<{
   in: string
   name: string
   description: string
-  type: string
+  schema: { type: string }
   items?: { type: string, properties?: any }
   properties?: any
 }> => {
@@ -114,7 +114,7 @@ export const getQueryParameters = (query: string): Array<{
         in: 'query',
         name,
         description: getCommentString(queryWithComment, name),
-        type,
+        schema: { type },
         items: type === 'array' ? getItems(queryWithComment[name]) : undefined,
         properties: type === 'object' ? getProperties(queryWithComment[name]) : undefined
       }
@@ -122,7 +122,7 @@ export const getQueryParameters = (query: string): Array<{
         in: string
         name: string
         description: string
-        type: string
+        schema: { type: string }
         items?: { type: string, properties?: any }
         properties?: any
       }
@@ -196,6 +196,7 @@ export const getResponseBody = (response: string, code: string) => {
   }
   return {
     [code]: {
+      description: code === '200' ? 'OK' : undefined,
       content: {
         'application/json': {
           schema
