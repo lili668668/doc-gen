@@ -4,16 +4,16 @@ import { parse } from 'comment-json'
 import { PresentationProps, PlatForm } from '../components/Presentation'
 
 export const getUrl = (platform: PlatForm, path: string): string => {
-  let prefix = '/'
+  let prefix = ''
   switch(platform) {
   case 'COMMON':
-    prefix = '/'
+    prefix = ''
     break
   case 'AGENT':
-    prefix = '/agent/v1'
+    prefix = 'agent/v1/'
     break
   case 'ADMIN':
-    prefix = '/admin/v1'
+    prefix = 'admin/v1/'
     break
   }
   return `${prefix}${path}`
